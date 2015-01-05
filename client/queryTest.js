@@ -1,0 +1,1 @@
+patientsSubscription = Meteor.subscribe("patients");
