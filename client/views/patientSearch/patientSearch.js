@@ -33,7 +33,7 @@ function getDate(id)
     }
 }
 
-
+// returns the name in LAST^FIRST format or undefined if nothing entered
 function getName(id)
 {
     var val = getValue(id);
@@ -42,6 +42,7 @@ function getName(id)
     }
     // strip spaces
     val = val.replace(/\s+/g, '');
+
     // parse comma to find last name, first name
     var nameFields = val.split(',');
     var name = "";

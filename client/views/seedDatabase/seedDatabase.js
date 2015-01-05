@@ -5,5 +5,4 @@ Template.seedDatabase.events({
     'click #clear': function () {
         Meteor.call('clearDatabase');
     }
-
 });

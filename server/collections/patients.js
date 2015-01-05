@@ -20,6 +20,8 @@ Meteor.publish('patients', function(query, limit) {
     query = query || {};
     limit = limit || 10;
 
+    // TODO: validate fields in query
+
     var queryDoc = {};
 
     if(query.name) {
@@ -46,6 +48,7 @@ Meteor.publish('patients', function(query, limit) {
 });
 
 addPatient = function(patient) {
+    // TODO: Validate fields in patient
     patient.nameLower = patient.name.toLowerCase();
     patient.mrnLower = patient.mrn.toLowerCase();
     patient.created = new Date();

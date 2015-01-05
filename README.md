@@ -9,7 +9,7 @@ Features
 * date querying
 * parsing patient names
 * friend patient name display
-* seed database with rando patients
+* seed database with random patients
 * clear database
 
 =============
@@ -26,7 +26,8 @@ meteor
 
 =============
 #### Usage
-1) Press "Seed Database" to populate it with 10 patients
-2) Press "Clear Database" to clear all records from the database
-3) Search on name, mrn or date of birth
+
+1. Press "Seed Database" to populate it with 10 patients
+2. Press "Clear Database" to clear all records from the database
+3. Search on name, mrn or date of birth (e.g. Mar 2, 1978)
 
