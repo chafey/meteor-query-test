@@ -9,7 +9,6 @@ function getValue(id)
     return val;
 }
 
-
 // returns a Date object for the specified dom element by id or undefined if element does not
 // exist or value is empty string.  The Date object is in UTC format
 function getUTCDate(id)
@@ -19,17 +18,6 @@ function getUTCDate(id)
         return undefined;
     } else {
         return new Date(val + " GMT");
-    }
-}
-// returns a Date object for the specified dom element by id or undefined if element does not
-// exist or value is empty string.  The Date object is in the local time zone
-function getDate(id)
-{
-    var val = getValue(id);
-    if(val === undefined) {
-        return undefined;
-    } else {
-        return new Date(val);
     }
 }
 
@@ -62,7 +50,7 @@ Template.patientSearch.events({
         var query = {
             name: getName('#name'),
             mrn: getValue('#mrn'),
-            dateTimeOfBirth: getDate('#dob')
+            dateOfBirth: getUTCDate('#dob')
         }
 
         patientsSubscription.stop();

@@ -8,7 +8,7 @@ Meteor.startup(function() {
         "mrnLower" : 1
     });
     Patients._ensureIndex({
-        "dateTimeOfBirth" : 1
+        "dateOfBirth" : 1
     });
 });
 
@@ -32,14 +32,14 @@ Meteor.publish('patients', function(query, limit) {
         // convert to lowercase since our search is case insensitive
         queryDoc.mrnLower = new RegExp('^' + query.mrn.toLowerCase());
     }
-    if(query.dateTimeOfBirth) {
-        // we remove the time component so this is a date search only.  Note that the time zone in the db
-        // may be different than the the timezone of the date specified in the search!
-        var dateOfBirth = new Date(new Date(query.dateTimeOfBirth).setHours(0,0,0,0));
+    if(query.dateOfBirth) {
+        // Birth dates are stored as Date() objects without the time or timezone.  Since Date() objects require
+        // a timezone, we set it to UTC and thus expect incoming dateOfBirth queries to be specified with this in mind
+        var dateOfBirth = new Date(query.dateOfBirth);
         if(!isNaN(dateOfBirth.getTime())) {
             var start = dateOfBirth;
             var end = new Date(dateOfBirth.getTime() + 1000 * 60 * 60 * 24);
-            queryDoc.dateTimeOfBirth = {$gte : start, $lt: end}
+            queryDoc.dateOfBirth = {$gte : start, $lt: end}
         }
     }
 
@@ -66,13 +66,15 @@ Meteor.methods({
         var faker = Meteor.npmRequire('Faker');
 
         for(var i=0; i < numPatients; i++) {
+            // We only store the birth date and not the time or the timezone.  Since Date() requires a timezone,
+            // we set it to GMT/UTC and force the time to midnight.
+            var birthDate = new Date(faker.Date.between("January 1, 1970 GMT" , "December 31, 1980 GMT"));
+            birthDate.setUTCHours(0,0,0,0);
             addPatient({
                 name : faker.Name.lastName() + "^" + faker.Name.firstName(),
                 mrn : 'A' + 10000+i,
                 gender : (Math.random() <= 0.5) ? "M" : "F",
-                // note that we need to specify the timezone for a birth date time to make it correct.  This can
-                // create an issue when querying from other timezones
-                dateTimeOfBirth: new Date(faker.Date.between("January 1, 1970 GMT-05:00" , "December 31, 1980 GMT-05:00"))
+                dateOfBirth: birthDate
             });
         }
     }

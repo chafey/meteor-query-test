@@ -5,10 +5,11 @@ Simple test application for querying with meteor
 Features
 --------
 
-* case insensitive querying
-* date querying
-* parsing patient names
-* friend patient name display
+* case insensitive and partial querying for names
+* case insensitive and partial querying for mrn
+* timezone independent birth date querying
+* friendly patient name display
+* time zone independent birth date display
 * seed database with random patients
 * clear database
 
