@@ -1,25 +1,25 @@
 <template name="patientList">
 
-    <div>
-        <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th class="col-md-4">Name</th>
-                <th class="col-md-2">MRN</th>
-                <th class="col-md-1">Gender</th>
-                <th class="col-md-3">Birth Date/Time</th>
-            </tr>
-            </thead>
-            <tbody>
-            {{#each patients}}
-                <tr >
-                    <th>{{friendlyName}}</th>
-                    <th>{{mrn}}</th>
-                    <th>{{gender}}</th>
-                    <th>{{dateTimeOfBirth}}</th>
-                </tr>
-            {{/each}}
-            </tbody>
-        </table>
-    </div>
+  <div>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th class="col-md-4">Name</th>
+          <th class="col-md-2">MRN</th>
+          <th class="col-md-1">Gender</th>
+          <th class="col-md-3">Birth Date/Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each patients}}
+        <tr>
+          <th>{{friendlyName}}</th>
+          <th>{{mrn}}</th>
+          <th>{{gender}}</th>
+          <th>{{dateTimeOfBirth}}</th>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
 </template>

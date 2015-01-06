@@ -10,6 +10,9 @@ Meteor.startup(function() {
     Patients._ensureIndex({
         "dateTimeOfBirth" : 1
     });
+
+    // we can call server side functions from the server
+    Meteor.call('seedDatabase');
 });
 
 function escapeRegExp(str) {
