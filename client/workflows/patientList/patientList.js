@@ -4,19 +4,71 @@ Session.get('dobFilter')
 
 Template.patientList.helpers({
   patients: function() {
-    return Patients.find({
-      $and: [{
-        name: {
-          $regex: Session.get('nameFilter'),
-          $options: 'i'
+    // if(Session.get('dobFilter')){
+    //   var birthdate = new Date(Session.get('dobFilter'));
+    //   return Patients.find({
+    //     dateTimeOfBirth: {
+    //       $lte: new Date(birthdate.getTime() + (1000 * 60 * 60 * 24)),
+    //       $gte: new Date(birthdate.getTime() - (1000 * 60 * 60 * 24))
+    //     }
+    //   });
+    // }else{
+
+      var query = {};
+
+      if(Session.get('dobFilter')){
+        var birthdate = new Date(Session.get('dobFilter'));
+        console.log('birthdate', birthdate);
+
+        // return Patients.find({
+        //   dateTimeOfBirth: {
+        //     $lte: new Date(birthdate.getTime() + (1000 * 60 * 60 * 24)),
+        //     $gte: new Date(birthdate.getTime() - (1000 * 60 * 60 * 24))
+        //   }
+        // });
+
+
+        query = {
+          $and: [{
+            name: {
+              $regex: Session.get('nameFilter'),
+              $options: 'i'
+            }
+          }, {
+            mrn: {
+              $regex: Session.get('mrnFilter'),
+              $options: 'i'
+            }
+          }, {
+            dateTimeOfBirth: {
+              $lte: new Date(birthdate.getTime() + (1000 * 60 * 60 * 24)),
+              $gte: new Date(birthdate.getTime() - (1000 * 60 * 60 * 24))
+            }
+          }]
         }
-      }, {
-        mrn: {
-          $regex: Session.get('mrnFilter'),
-          $options: 'i'
+        return Patients.find(query);
+
+      }else{
+        query = {
+          $and: [{
+            name: {
+              $regex: Session.get('nameFilter'),
+              $options: 'i'
+            }
+          }, {
+            mrn: {
+              $regex: Session.get('mrnFilter'),
+              $options: 'i'
+            }
+          }]
         }
-      }]
-    });
+        return Patients.find(query);
+      }
+
+
+
+
+    // }
   },
   dateTimeOfBirthUtc: function() {
     return this.dateTimeOfBirth.toUTCString()

@@ -19,35 +19,44 @@ function escapeRegExp(str) {
     return str.replace(/[.^$*+?()[{\\|\]-]/g, '\\$&');
 }
 
-Meteor.publish('patients', function(query, limit) {
-    query = query || {};
-    limit = limit || 10;
+Meteor.publish('patients', function(queryParameters, limit) {
+    console.log('received queryParameters for patients publication', queryParameters);
 
-    // TODO: validate fields in query
+    return Patients.find({}, {limit: 10});
 
-    var queryDoc = {};
+    // eventually, this is the kind of query that we would want for a PACS server
+    // return Patients.find({
+    //   examDate: {
+    //     "$gte": queryParameters.minDate,
+    //     "$lt": queryParameters.minDate
+    //   },
+    //   modality: queryParameters.modality
+    // }, {limit: 10});
 
-    if(query.name) {
-        // convert to lowercase since our search is case insensitive
-        queryDoc.nameLower = new RegExp('^' + escapeRegExp(query.name.toLowerCase()));
-    }
-    if(query.mrn) {
-        // convert to lowercase since our search is case insensitive
-        queryDoc.mrnLower = new RegExp('^' + query.mrn.toLowerCase());
-    }
-    if(query.dateTimeOfBirth) {
-        // we remove the time component so this is a date search only.  Note that the time zone in the db
-        // may be different than the the timezone of the date specified in the search!
-        var dateOfBirth = new Date(new Date(query.dateTimeOfBirth).setHours(0,0,0,0));
-        if(!isNaN(dateOfBirth.getTime())) {
-            var start = dateOfBirth;
-            var end = new Date(dateOfBirth.getTime() + 1000 * 60 * 60 * 24);
-            queryDoc.dateTimeOfBirth = {$gte : start, $lt: end}
-        }
-    }
 
-    var pc = Patients.find(queryDoc, {limit : limit});
-    return pc;
+    // these should all be client-side queries
+    // var queryDoc = {};
+    //
+    // if(query.name) {
+    //     // convert to lowercase since our search is case insensitive
+    //     queryDoc.nameLower = new RegExp('^' + escapeRegExp(query.name.toLowerCase()));
+    // }
+    // if(query.mrn) {
+    //     // convert to lowercase since our search is case insensitive
+    //     queryDoc.mrnLower = new RegExp('^' + query.mrn.toLowerCase());
+    // }
+    // if(query.dateTimeOfBirth) {
+    //     // we remove the time component so this is a date search only.  Note that the time zone in the db
+    //     // may be different than the the timezone of the date specified in the search!
+    //     var dateOfBirth = new Date(new Date(query.dateTimeOfBirth).setHours(0,0,0,0));
+    //     if(!isNaN(dateOfBirth.getTime())) {
+    //         var start = dateOfBirth;
+    //         var end = new Date(dateOfBirth.getTime() + 1000 * 60 * 60 * 24);
+    //         queryDoc.dateTimeOfBirth = {$gte : start, $lt: end}
+    //     }
+    // }
+    // var pc = Patients.find(queryDoc, {limit : limit});
+    // return pc;
 });
 
 addPatient = function(patient) {

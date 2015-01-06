@@ -3,18 +3,39 @@
     <br>
     <form id="patientSearchForm" class="form-inline">
       <div class="form-group">
-        <label class="sr-only" for="nameInput">Name</label>
-        <input type="text" class="form-control" id="nameInput" placeholder="Name">
+        <label class="control-label" for="minDateInput">Start Date</label><br>
+        <input type="date" class="form-control" id="minDateInput" placeholder="Start Date (YYYY-MM-DD)">
       </div>
       <div class="form-group">
-        <label class="sr-only" for="mrnInput">MRN</label>
-        <input type="text" class="form-control" id="mrnInput" placeholder="MRN">
+        <label class="control-label" for="maxDateInput">End Date</label><br>
+        <input type="date" class="form-control" id="maxDateInput" placeholder="End Date (YYYY-MM-DD)">
       </div>
       <div class="form-group">
-        <label class="sr-only" for="dobInput">Birth Date Time</label>
-        <input type="text" class="form-control" id="dobInput" placeholder="Birth Date Time">
+        <label class="control-label" for="modalityInput">Modality Type</label><br>
+        <input type="text" class="form-control" id="modalityInput" placeholder="Modality Type" value="{{getModality}}">
       </div>
-      <button type="submit" id="patientSearchButton" class="btn btn-default">Server Search</button>
+
+      <div class="form-group">
+        <label class="control-label" for="patientSearchButton"></label><br>
+        <input type="button" id="patientSearchButton" class="form-control" value="Search Server">
+      </div>
+
+
+      <hr>
+      <div class="form-group">
+        <label class="control-label" for="nameInput">Name</label><br>
+        <input type="text" class="form-control" id="nameInput" placeholder="Name" value="{{getName}}">
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="mrnInput">MRN</label><br>
+        <input type="text" class="form-control" id="mrnInput" placeholder="MRN" value="{{getMrn}}">
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="dobInput">Birth Date Time</label><br>
+        <input type="date" class="form-control" id="dobInput" placeholder="Birth Date (YYYY-MM-DD)" value="{{getDob}}">
+      </div>
+
+
     </form>
     <br>
   </div>
